@@ -49,8 +49,8 @@ void commitMove(std::vector<Cubelet>& cubelets, const Move& move);
 Move randomMove();
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 640;
+const unsigned int SCR_HEIGHT = 480;
 
 int main()
 {
@@ -67,7 +67,7 @@ int main()
 
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Rubik's Cube Demo", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -198,7 +198,7 @@ int main()
         }
     }
 
-    float cubeScale = 0.3f;
+    float cubeScale = 0.4f;
     float gap = 0.01f;
     float spacing = cubeScale + gap;
 
@@ -255,7 +255,7 @@ int main()
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 projection = glm::mat4(1.0f);
 
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+        view = glm::translate(view, glm::vec3(0.0f, 0.1f, -3.0f));
 
         projection = glm::perspective(
             glm::radians(45.0f),
