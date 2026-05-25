@@ -52,6 +52,9 @@ Move randomMove();
 const unsigned int SCR_WIDTH = 640;
 const unsigned int SCR_HEIGHT = 480;
 
+int gFramebufferWidth = SCR_WIDTH;
+int gFramebufferHeight = SCR_HEIGHT;
+
 int main()
 {
     // glfw: initialize and configure
@@ -64,6 +67,9 @@ int main()
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
+
+    // Anti-aliasing
+    glfwWindowHint(GLFW_SAMPLES, 4);
 
     // glfw window creation
     // --------------------
@@ -88,6 +94,18 @@ int main()
     // configure global opengl state
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_MULTISAMPLE);
+
+glfwGetFramebufferSize(window, &gFramebufferWidth, &gFramebufferHeight);
+glViewport(0, 0, gFramebufferWidth, gFramebufferHeight);
+
+std::cout << "Framebuffer size: "
+          << gFramebufferWidth << " x " << gFramebufferHeight << std::endl;
+
+GLint samples = 0;
+glGetIntegerv(GL_SAMPLES, &samples);
+std::cout << "MSAA samples: " << samples << std::endl;
+
 
     // build and compile our shader zprogram
     // ------------------------------------
@@ -255,11 +273,14 @@ int main()
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 projection = glm::mat4(1.0f);
 
-        view = glm::translate(view, glm::vec3(0.0f, 0.1f, -3.0f));
+        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+        float aspect = static_cast<float>(gFramebufferWidth) /
+                    static_cast<float>(gFramebufferHeight);
 
         projection = glm::perspective(
             glm::radians(45.0f),
-            (float)SCR_WIDTH / (float)SCR_HEIGHT,
+            aspect,
             0.1f,
             100.0f
         );
@@ -285,6 +306,10 @@ int main()
             glm::radians(135.0f),
             glm::vec3(0.0f, 1.0f, 0.0f)
         );
+
+
+
+
 
         for (Cubelet& cubelet : cubelets)
         {
@@ -319,6 +344,14 @@ int main()
         glfwPollEvents();
     }
 
+
+
+
+
+
+
+
+
         // optional: de-allocate all resources once they've outlived their purpose:
         // ------------------------------------------------------------------------
         glDeleteVertexArrays(1, &VAO);
@@ -342,8 +375,12 @@ void processInput(GLFWwindow *window)
 // ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-    // make sure the viewport matches the new window dimensions; note that width and 
-    // height will be significantly larger than specified on retina displays.
+    if (height == 0)
+        height = 1;
+
+    gFramebufferWidth = width;
+    gFramebufferHeight = height;
+
     glViewport(0, 0, width, height);
 }
 
