@@ -32,10 +32,21 @@ struct Move
     float currentAngle;
 };
 
+enum Face
+{
+    BACK = 0,
+    FRONT,
+    LEFT,
+    RIGHT,
+    BOTTOM,
+    TOP
+};
+
 struct Cubelet
 {
     glm::ivec3 gridPos;
     glm::mat4 orientation;
+    glm::vec3 faceColors[6];
 };
 
 
@@ -154,11 +165,24 @@ int main()
     glEnableVertexAttribArray(0);
 
     // color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
+    //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    //glEnableVertexAttribArray(1);
 
     // tell opengl for each sampler to which texture unit it belongs to
     ourShader.use();
+
+
+
+const glm::vec3 BLACK  = glm::vec3(0.03f, 0.03f, 0.03f);
+const glm::vec3 BLUE   = glm::vec3(0.0f, 0.0f, 1.0f);
+const glm::vec3 GREEN  = glm::vec3(0.0f, 1.0f, 0.0f);
+const glm::vec3 ORANGE = glm::vec3(1.0f, 0.5f, 0.0f);
+const glm::vec3 RED    = glm::vec3(1.0f, 0.0f, 0.0f);
+const glm::vec3 YELLOW = glm::vec3(1.0f, 1.0f, 0.0f);
+const glm::vec3 WHITE  = glm::vec3(1.0f, 1.0f, 1.0f);
+
+
+
 
     std::vector<Cubelet> cubelets;
 
@@ -168,7 +192,26 @@ int main()
         {
             for (int z = -1; z <= 1; z++)
             {
-                cubelets.push_back({ glm::ivec3(x, y, z), glm::mat4(1.0f) });
+                Cubelet c;
+
+                c.gridPos = glm::ivec3(x, y, z);
+                c.orientation = glm::mat4(1.0f);
+
+                // start all faces black
+                for (int i = 0; i < 6; i++)
+                    c.faceColors[i] = BLACK;
+
+                // expose only outer faces
+                if (x ==  1) c.faceColors[RIGHT]  = RED;
+                if (x == -1) c.faceColors[LEFT]   = ORANGE;
+
+                if (y ==  1) c.faceColors[TOP]    = WHITE;
+                if (y == -1) c.faceColors[BOTTOM] = YELLOW;
+
+                if (z ==  1) c.faceColors[FRONT]  = GREEN;
+                if (z == -1) c.faceColors[BACK]   = BLUE;
+
+                cubelets.push_back(c);
             }
         }
     }
@@ -300,7 +343,33 @@ int main()
             );
 
             glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-            glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+
+
+            // glDrawArrays(GL_TRIANGLES, 0, 36);
+            // we will now draw each cubelet separately
+
+            ourShader.setVec3("faceColor", cubelet.faceColors[BACK]);
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+
+            ourShader.setVec3("faceColor", cubelet.faceColors[FRONT]);
+            glDrawArrays(GL_TRIANGLES, 6, 6);
+
+            ourShader.setVec3("faceColor", cubelet.faceColors[LEFT]);
+            glDrawArrays(GL_TRIANGLES, 12, 6);
+
+            ourShader.setVec3("faceColor", cubelet.faceColors[RIGHT]);
+            glDrawArrays(GL_TRIANGLES, 18, 6);
+
+            ourShader.setVec3("faceColor", cubelet.faceColors[BOTTOM]);
+            glDrawArrays(GL_TRIANGLES, 24, 6);
+
+            ourShader.setVec3("faceColor", cubelet.faceColors[TOP]);
+            glDrawArrays(GL_TRIANGLES, 30, 6);
+
+
+
         }
 
         glfwSwapBuffers(window);
