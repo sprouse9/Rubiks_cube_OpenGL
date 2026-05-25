@@ -48,64 +48,22 @@ void commitMove(std::vector<Cubelet>& cubelets, const Move& move);
 
 Move randomMove();
 
+GLFWwindow* createOpenGLWindow(int width, int height, const char* title);
+
 // settings
 const unsigned int SCR_WIDTH = 640;
 const unsigned int SCR_HEIGHT = 480;
 
-int gFramebufferWidth = SCR_WIDTH;
-int gFramebufferHeight = SCR_HEIGHT;
-
 int main()
 {
-    // glfw: initialize and configure
-    // ------------------------------
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    GLFWwindow* window = createOpenGLWindow(
+        640,
+        480,
+        "Rubik's Cube OpenGL Demo"
+    );
 
-#ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
-
-    // Anti-aliasing
-    glfwWindowHint(GLFW_SAMPLES, 4);
-
-    // glfw window creation
-    // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Rubik's Cube Demo", NULL, NULL);
-    if (window == NULL)
-    {
-        std::cout << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-    // glad: load all OpenGL function pointers
-    // ---------------------------------------
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        return -1;
-    }
-
-    // configure global opengl state
-    // -----------------------------
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_MULTISAMPLE);
-
-glfwGetFramebufferSize(window, &gFramebufferWidth, &gFramebufferHeight);
-glViewport(0, 0, gFramebufferWidth, gFramebufferHeight);
-
-std::cout << "Framebuffer size: "
-          << gFramebufferWidth << " x " << gFramebufferHeight << std::endl;
-
-GLint samples = 0;
-glGetIntegerv(GL_SAMPLES, &samples);
-std::cout << "MSAA samples: " << samples << std::endl;
-
+    if (!window)
+        return 1;
 
     // build and compile our shader zprogram
     // ------------------------------------
@@ -147,7 +105,6 @@ std::cout << "MSAA samples: " << samples << std::endl;
         -0.5f, -0.5f, -0.5f,  1.0f, 0.5f, 0.0f,
         -0.5f, -0.5f,  0.5f,  1.0f, 0.5f, 0.0f,
         -0.5f,  0.5f,  0.5f,  1.0f, 0.5f, 0.0f,
-
 
         // =========================
         // RIGHT FACE (Red)
@@ -275,8 +232,16 @@ std::cout << "MSAA samples: " << samples << std::endl;
 
         view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 
-        float aspect = static_cast<float>(gFramebufferWidth) /
-                    static_cast<float>(gFramebufferHeight);
+        int framebufferWidth = 0;
+        int framebufferHeight = 0;
+
+        glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
+
+        if (framebufferHeight == 0)
+            framebufferHeight = 1;
+
+        float aspect = static_cast<float>(framebufferWidth) /
+                    static_cast<float>(framebufferHeight);
 
         projection = glm::perspective(
             glm::radians(45.0f),
@@ -306,8 +271,6 @@ std::cout << "MSAA samples: " << samples << std::endl;
             glm::radians(135.0f),
             glm::vec3(0.0f, 1.0f, 0.0f)
         );
-
-
 
 
 
@@ -346,12 +309,6 @@ std::cout << "MSAA samples: " << samples << std::endl;
 
 
 
-
-
-
-
-
-
         // optional: de-allocate all resources once they've outlived their purpose:
         // ------------------------------------------------------------------------
         glDeleteVertexArrays(1, &VAO);
@@ -377,9 +334,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     if (height == 0)
         height = 1;
-
-    gFramebufferWidth = width;
-    gFramebufferHeight = height;
 
     glViewport(0, 0, width, height);
 }
@@ -490,4 +444,68 @@ Move randomMove()
     move.currentAngle = 0.0f;
 
     return move;
+}
+
+
+GLFWwindow* createOpenGLWindow(int width, int height, const char* title)
+{
+    // glfw: initialize and configure
+    // ------------------------------
+    if (!glfwInit())
+    {
+        std::cerr << "Failed to initialize GLFW\n";
+        return nullptr;
+    }
+
+    // macOS supports OpenGL 4.1 Core Profile, not modern 4.5/4.6.
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    #ifdef __APPLE__
+        // Required on macOS for OpenGL 3.2+ core contexts.
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        std::cout << "Apple computer detected\n";
+    #endif
+
+    // Anti-aliasing
+    glfwWindowHint(GLFW_SAMPLES, 4);
+
+   // glfw window creation
+    // --------------------
+    GLFWwindow* window = glfwCreateWindow(width, height, title, NULL, NULL);
+    if (window == NULL)
+    {
+        std::cout << "Failed to create GLFW window" << std::endl;
+        glfwTerminate();
+        return nullptr;
+    }
+    glfwMakeContextCurrent(window);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+    // glad: load all OpenGL function pointers
+    // ---------------------------------------
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cout << "Failed to initialize GLAD" << std::endl;
+        return nullptr;
+    }
+
+    // configure global opengl state
+    // -----------------------------
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_MULTISAMPLE);
+
+    int framebuffer_width = 0;
+    int framebuffer_height = 0;
+    glfwGetFramebufferSize(window, &framebuffer_width, &framebuffer_height);
+    glViewport(0, 0, framebuffer_width, framebuffer_height);
+
+    std::cout << "OpenGL version: " << glGetString(GL_VERSION) << "\n";
+    std::cout << "Renderer: " << glGetString(GL_RENDERER) << "\n";
+    std::cout << "Width x Height: (" 
+              << framebuffer_width << ", " 
+              << framebuffer_height << ")\n";
+
+    return window;
 }
