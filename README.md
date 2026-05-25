@@ -2,6 +2,12 @@
 
 A procedural 3D Rubik's Cube simulation written in modern OpenGL and C++.
 
+
+<img src="images/rubiks_cube_image_1.png" alt="rubiks_cube_image_1" width="500"/><img src="images/rubiks_cube_image_2.png" alt="rubiks_cube_image_2" width="500"/>
+
+
+
+
 This project began as an OpenGL learning exercise and evolved into a simple Rubik’s Cube engine featuring:
 
 - 27 independently rendered cubelets
