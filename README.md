@@ -6,8 +6,7 @@ A procedural 3D Rubik's Cube simulation written in modern OpenGL and C++.
 <img src="images/dual_rubiks_cube_image.png" alt="rubiks_cube_image_1" width="500"/>
 
 ## Demo
-
-
+https://github.com/user-attachments/assets/b5fbe0ec-aad3-4661-9530-c78a8889ef73
 
 This project began as an OpenGL learning exercise and evolved into a simple Rubik’s Cube engine featuring:
 
