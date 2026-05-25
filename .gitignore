@@ -5,3 +5,5 @@ build/
 *.dSYM
 .vscode/
 .idea/
+.ninja_deps
+.ninja_log
