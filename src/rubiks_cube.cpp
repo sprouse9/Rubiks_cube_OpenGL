@@ -85,70 +85,70 @@ int main()
     float vertices[] = {
 
         // =========================
-        // BACK FACE (Blue)
+        // BACK FACE -Z (Blue)
         // =========================
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+        0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+        0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
-        0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-
-        // =========================
-        // FRONT FACE (Green)
-        // =========================
-        -0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-
-        0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
+        0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
         // =========================
-        // LEFT FACE (Orange)
+        // FRONT FACE +Z (Green)
         // =========================
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.5f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  1.0f, 0.5f, 0.0f,
-        -0.5f, -0.5f, -0.5f,  1.0f, 0.5f, 0.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+     0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
 
-        -0.5f, -0.5f, -0.5f,  1.0f, 0.5f, 0.0f,
-        -0.5f, -0.5f,  0.5f,  1.0f, 0.5f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.5f, 0.0f,
-
-        // =========================
-        // RIGHT FACE (Red)
-        // =========================
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
-
-        0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
 
         // =========================
-        // BOTTOM FACE (Yellow)
+        // LEFT FACE -X (Orange)
         // =========================
-        -0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
 
-        0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
 
         // =========================
-        // TOP FACE (White)
+        // RIGHT FACE +X (Red)
         // =========================
-        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
 
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f
+     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+     0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+
+        // =========================
+        // BOTTOM FACE -Y (Yellow)
+        // =========================
+    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+     0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+
+     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+
+        // =========================
+        // TOP FACE +Y (White)
+        // =========================
+    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+     0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+
+     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f
     };
     
     unsigned int VBO, VAO;
@@ -164,6 +164,10 @@ int main()
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
+    // normal attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
     // color attribute
     //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     //glEnableVertexAttribArray(1);
@@ -172,16 +176,13 @@ int main()
     ourShader.use();
 
 
-
-const glm::vec3 BLACK  = glm::vec3(0.03f, 0.03f, 0.03f);
-const glm::vec3 BLUE   = glm::vec3(0.0f, 0.0f, 1.0f);
-const glm::vec3 GREEN  = glm::vec3(0.0f, 1.0f, 0.0f);
-const glm::vec3 ORANGE = glm::vec3(1.0f, 0.5f, 0.0f);
-const glm::vec3 RED    = glm::vec3(1.0f, 0.0f, 0.0f);
-const glm::vec3 YELLOW = glm::vec3(1.0f, 1.0f, 0.0f);
-const glm::vec3 WHITE  = glm::vec3(1.0f, 1.0f, 1.0f);
-
-
+    const glm::vec3 BLACK  = glm::vec3(0.03f, 0.03f, 0.03f);
+    const glm::vec3 BLUE   = glm::vec3(0.0f, 0.0f, 1.0f);
+    const glm::vec3 GREEN  = glm::vec3(0.0f, 1.0f, 0.0f);
+    const glm::vec3 ORANGE = glm::vec3(1.0f, 0.5f, 0.0f);
+    const glm::vec3 RED    = glm::vec3(1.0f, 0.0f, 0.0f);
+    const glm::vec3 YELLOW = glm::vec3(1.0f, 1.0f, 0.0f);
+    const glm::vec3 WHITE  = glm::vec3(1.0f, 1.0f, 1.0f);
 
 
     std::vector<Cubelet> cubelets;
@@ -270,6 +271,20 @@ const glm::vec3 WHITE  = glm::vec3(1.0f, 1.0f, 1.0f);
 
         ourShader.use();
 
+        glm::vec3 lightPos(2.0f, 3.0f, 4.0f);
+        glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
+
+        // Your view matrix later translates the world by -3 on Z,
+        // so the camera is effectively at world position (0, 0, 3).
+        glm::vec3 cameraPos(0.0f, 0.0f, 3.0f);
+
+        ourShader.setVec3("lightPos", lightPos);
+        ourShader.setVec3("lightColor", lightColor);
+        ourShader.setVec3("viewPos", cameraPos);
+
+
+
+
         glm::mat4 view = glm::mat4(1.0f);
         glm::mat4 projection = glm::mat4(1.0f);
 
@@ -293,11 +308,14 @@ const glm::vec3 WHITE  = glm::vec3(1.0f, 1.0f, 1.0f);
             100.0f
         );
 
-        unsigned int modelLoc = glGetUniformLocation(ourShader.ID, "model");
-        unsigned int viewLoc  = glGetUniformLocation(ourShader.ID, "view");
 
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+
+        ourShader.setMat4("view", view);
         ourShader.setMat4("projection", projection);
+
+
+
+
 
         glBindVertexArray(VAO);
 
@@ -342,7 +360,7 @@ const glm::vec3 WHITE  = glm::vec3(1.0f, 1.0f, 1.0f);
                 glm::vec3(cubeScale)
             );
 
-            glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+            ourShader.setMat4("model", model);
 
 
 
